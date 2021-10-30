@@ -1,7 +1,9 @@
 import React from "react";
+import { useParams } from "react-router";
 
 function Product() {
-	return <div></div>;
+	const { id } = useParams<{ id: string }>();
+	return <div>Dettagli prodotto {id}</div>;
 }
 
 export default Product;
