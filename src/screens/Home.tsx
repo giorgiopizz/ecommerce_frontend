@@ -10,7 +10,7 @@ function Home() {
 	const [prodotti, setProdotti] = useState<Prodotto[]>([]);
 	useEffect(() => {
 		products.getAll().then((res) => {
-			setProdotti(res.content);
+			setProdotti(res.data);
 		});
 	}, []);
 	return <div></div>;

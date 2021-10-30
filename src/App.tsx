@@ -1,43 +1,48 @@
-// import React from "react";
-// import logo from "./logo.svg";
-// import "./App.css";
-
-// function App() {
-// 	return <div className='App'></div>;
-// }
-
-// export default App;
-
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import Cart from "./screens/Cart";
 import Home from "./screens/Home";
+import Login from "./screens/Login";
 import Orders from "./screens/Orders";
+import Product from "./screens/Product";
+import Signup from "./screens/Signup";
 export default function App() {
+	const [isAuth, setIsAuth] = useState<boolean>(false);
+	useEffect(() => {
+		const user = JSON.parse(localStorage.getItem("user") as string);
+
+		if (user && user.token) {
+			setIsAuth(true);
+		} else {
+			setIsAuth(false);
+		}
+	});
 	return (
 		<Router>
 			<div>
-				<nav>
-					<ul>
-						<li>
-							<Link to='/'>Home</Link>
-						</li>
-						<li>
-							<Link to='/about'>About</Link>
-						</li>
-						<li>
-							<Link to='/users'>Users</Link>
-						</li>
-					</ul>
-				</nav>
-
+				<NavBar isAuth={isAuth} />
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 				<Switch>
 					{/* <Route path='/about'>
 						< />
 					</Route> */}
-					<Route path='/users'>
+
+					<Route path='/cart'>
+						<Cart />
+					</Route>
+					<Route path='/orders'>
 						<Orders />
+					</Route>
+					<Route path='/login'>
+						<Login />
+					</Route>
+					<Route path='/signup'>
+						<Signup />
+					</Route>
+					<Route path='/product/:id'>
+						<Product />
 					</Route>
 					<Route path='/'>
 						<Home />
